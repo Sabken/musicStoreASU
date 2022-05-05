@@ -17,7 +17,7 @@ public class Authenticator {
         return tempUser;
     }
     
-    public Boolean logOf(UserBase user){
+    public static Boolean logout(UserBase user){
         return user.logOff();
         
     }

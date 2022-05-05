@@ -1,6 +1,7 @@
 
 package Phase1;
 import MusicStore.*;
+import java.util.Date;
 import java.util.Scanner;
 public class Phase1Main {
     public static void Init(MusicStoreController shop){
@@ -19,6 +20,14 @@ public class Phase1Main {
         shop.addAdmin(admin1);
         shop.addAdmin(admin2);
         //----------------------------------------------------------------------
+        
+        MusicalItem music1 = new MusicalItem("seto ana", "03:00", "a ya seto ana", new Date(), 111, "Akram Hossny", 10);
+        MusicalItem music2 = new MusicalItem("bosbos", "02:00", "ana bosbos basbabes", new Date(), 11, "Akram Hossny", 20);
+        MusicalItem music3 = new MusicalItem("sha2ltony fei ba7r bera", "03:10", "do3'ry seka anty el amira", new Date(), 211, "Hamo Beka", 0);
+        shop.addMusic(music1);
+        shop.addMusic(music2);
+        shop.addMusic(music3);
+
     }
     
     public static UserCustomer customerLogin(MusicStoreController shop,Scanner input){
@@ -96,7 +105,30 @@ public class Phase1Main {
                     case 2:
                         UserCustomer tempCustomer = customerLogin(shop, input);
                         if(tempCustomer == null) break;
-                        System.out.println("Fuck you");
+                        try{               
+                            if(!tempCustomer.isIsLoggedIn())throw new SecurityException("Auth Erorr");
+                            Customer:{
+                                while (true) {
+                                    System.out.print("1.Show Music\t2.Find Music\t3.Logout <=\nYour choice: ");
+                                    choice=input.nextInt();
+                                    switch (choice) {
+                                        case 1:
+                                            shop.browse();
+                                            break;
+                                        case 2:
+                                            break;
+                                        case 3:
+                                            shop.customerLogout();
+                                            break Customer;
+                                        default:
+                                            throw new AssertionError();
+                                    }
+                                    
+                                }
+                            }
+                            
+
+                        }catch (SecurityException e){}
                         break;
                    case 1:
                         UserAdmin tempAdmin = adminLogin(shop, input);

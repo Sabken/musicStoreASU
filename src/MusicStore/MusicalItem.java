@@ -11,6 +11,18 @@ public class MusicalItem {
    String artist;
    double price;
 
+    public MusicalItem(String musicName, String duration, String description, Date releaseDate, int quantity, String artist, double price) {
+        this.musicName = musicName;
+        this.duration = duration;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.quantity = quantity;
+        this.artist = artist;
+        this.price = price;
+    }
+
+   
+   
     public String getMusicName() {
         return musicName;
     }
@@ -73,6 +85,17 @@ public class MusicalItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "MusicalItem{" + "musicName=" + musicName + ", category=" + category + ", duration=" + duration + ", description=" + description + ", releaseDate=" + releaseDate + ", quantity=" + quantity + ", artist=" + artist + ", price=" + price + '}';
+    }
+
+   
+    public String toString(int id) {
+        return id + "\t " + musicName + "\t " + category + "\t " + duration + "\t " + description + "\t " + releaseDate + "\t " + quantity + "\t " + artist + "\t " + price 
+                +"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
     }
    
    
