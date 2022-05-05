@@ -1,14 +1,20 @@
 
 package MusicStore;
-
+import java.util.*;
 public class Authenticator {
-    public static UserBase login(String username, String password){
-        UserBase user = null;
-        if(username.equals("hamada")&& password.equals("12345678"))
-        {//user;
-            
+    public static UserBase login(String username, String password,Set<UserBase> users){
+        UserBase tempUser = null;
+        for (UserBase user:users) {
+            if(user.getUsername().equals(username))
+            {
+                if(user.getPassword().equals(password))
+                    tempUser = user;
+                break;
+            }
         }
-        return user;
+        if(tempUser != null)
+            tempUser.setIsLoggedIn(true);
+        return tempUser;
     }
     
     public Boolean logOf(UserBase user){

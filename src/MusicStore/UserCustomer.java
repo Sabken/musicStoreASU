@@ -1,23 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package MusicStore;
 
-/**
- *
- * @author Amir5
- */
 public class UserCustomer extends UserBase{
     private int ssn;
 
+    public UserCustomer(int ssn) {
+        this.ssn = ssn;
+    }
+
+    public UserCustomer(int ssn, String firstName, String lastName, String username, String password) {
+        super(firstName, lastName, username, password, UserRole.Customer);
+        this.ssn = ssn;
+    }
+
+    public UserCustomer() {
+     super();
+    }
+    
     public int getSsn() {
         return ssn;
     }
-    
-    
-    
-    
 
     @Override
     public int hashCode() {

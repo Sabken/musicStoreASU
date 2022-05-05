@@ -60,6 +60,10 @@ public abstract class UserBase {
         this.role = role;
     }
 
+    public void setIsLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
+    }
+
     public boolean isIsLoggedIn() {
         return isLoggedIn;
     }

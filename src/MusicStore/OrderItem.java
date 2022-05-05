@@ -1,13 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package MusicStore;
 
-/**
- *
- * @author Amir5
- */
+
 public class OrderItem {
-    
+    int amount;
+    MusicalItem musicalItem;
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public MusicalItem getMusicalItem() {
+        return musicalItem;
+    }
+
+    public void setMusicalItem(MusicalItem musicalItem) {
+        this.musicalItem = musicalItem;
+    }
 }
