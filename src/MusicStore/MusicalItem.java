@@ -3,15 +3,15 @@ import java.util.*;
 
 public class MusicalItem {
    String musicName;
-   ArrayList<String> category;
+   MusicCategory category;
    String duration;
    String description;
-   Date releaseDate;
+   String releaseDate;
    int  quantity;
    String artist;
    double price;
 
-    public MusicalItem(String musicName, String duration, String description, Date releaseDate, int quantity, String artist, double price) {
+    public MusicalItem(String musicName, String duration, String description, String releaseDate, int quantity, String artist, double price, MusicCategory category) {
         this.musicName = musicName;
         this.duration = duration;
         this.description = description;
@@ -19,6 +19,7 @@ public class MusicalItem {
         this.quantity = quantity;
         this.artist = artist;
         this.price = price;
+        this.category =category;
     }
 
    
@@ -31,11 +32,11 @@ public class MusicalItem {
         this.musicName = musicName;
     }
 
-    public ArrayList<String> getCategory() {
+    public MusicCategory getCategory() {
         return category;
     }
 
-    public void setCategory(ArrayList<String> category) {
+    public void setCategory(MusicCategory category) {
         this.category = category;
     }
 
@@ -55,11 +56,11 @@ public class MusicalItem {
         this.description = description;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -87,6 +88,29 @@ public class MusicalItem {
         this.price = price;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.musicName);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MusicalItem other = (MusicalItem) obj;
+        return Objects.equals(this.musicName, other.musicName);
+    }
+    
+    
     @Override
     public String toString() {
         return "MusicalItem{" + "musicName=" + musicName + ", category=" + category + ", duration=" + duration + ", description=" + description + ", releaseDate=" + releaseDate + ", quantity=" + quantity + ", artist=" + artist + ", price=" + price + '}';

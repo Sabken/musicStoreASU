@@ -16,10 +16,19 @@ public class Order {
     }
 
     public void addItem(OrderItem item){
+        if(items==(null)){
+            items=new ArrayList<OrderItem>();
+        }
         items.add(item);
     }
     
-    
+    public void Pay(){
+        for (int i = 0; i < items.size(); i++) {
+            OrderItem item = items.get(i);
+            int amount  = item.musicalItem.getQuantity() - item.amount;
+            item.musicalItem.setQuantity(amount);
+        }
+    } 
     public double getTotalPrice(){
         double sum = 0;
         for (int i = 0; i < items.size(); i++) {

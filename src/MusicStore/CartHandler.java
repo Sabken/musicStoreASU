@@ -16,7 +16,7 @@ public class CartHandler {
         if(cartItems.containsKey(item)){
             amount += cartItems.get(item);
         }
-        if(item.getQuantity()<amount)
+        if(item.getQuantity()>=amount)
         {
             cartItems.put(item, amount);
             return true;
@@ -28,7 +28,7 @@ public class CartHandler {
         cartItems.remove(item);
     }
     public boolean isEmpty(){
-        return !cartItems.isEmpty();
+        return cartItems.isEmpty();
     }
      public void removeItem(MusicalItem item, int amount){
         if(cartItems.containsKey(item)){

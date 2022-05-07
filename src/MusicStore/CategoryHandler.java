@@ -4,27 +4,31 @@ package MusicStore;
 import java.util.ArrayList;
 import java.util.HashSet;
 public class CategoryHandler {
-    private HashSet<String> categories;
-
+    private ArrayList<MusicCategory> categories;
+    private MusicCategory defaultCategory;
     public CategoryHandler() {
-        categories = new HashSet<String>();
+        defaultCategory= new MusicCategory("unknown");
+        categories = new ArrayList<MusicCategory>();
     }
     
-    public Boolean addNewCategory(String _category){
-        return categories.add(_category);
+    public boolean addNewCategory(MusicCategory _category){
+        if(categories.contains(_category))return false;
+        categories.add(_category);
+        return true;
     }
     
-    public Boolean removeCategory(String _category){
-        return categories.remove(_category);
+    public Boolean removeCategory(int _categoryIndex){
+        if(_categoryIndex<0||_categoryIndex>=categories.size())return false;
+        categories.remove(_categoryIndex);
+        return true;
     }
-    
-    public void verfiyCategory(MusicalItem item){
-        ArrayList<String> tempCategories = item.getCategory();
-        for (int i = 0; i < tempCategories.size(); i++) {
-            if(!categories.contains(tempCategories.get(i))){
-                tempCategories.remove(i);
-            }
-        }
+
+    public ArrayList<MusicCategory> getCategories() {
+        return categories;
     }
-    
+     public void verfiyCategory(MusicalItem item){
+        MusicCategory tempCategory = item.getCategory();
+      if(!categories.contains(tempCategory)){
+               item.setCategory(defaultCategory);
+            }}
 }
