@@ -56,7 +56,7 @@ public class MusicStoreController {
          System.out.println("# "+"\t Category");
          
          for (int i = 0; i < categoryHandler.getCategories().size(); i++) {
-             System.err.println((i+1)+"\t"+categoryHandler.getCategories().get(i).toString());
+             System.out.println((i+1)+"\t"+categoryHandler.getCategories().get(i).toString());
         }
     }
     
@@ -209,7 +209,7 @@ public class MusicStoreController {
         return true;
     }
     
-    public void Remove(int index){
+    public void removeCategory(int index){
        if( categoryHandler.removeCategory(index))
        {
            for (MusicalItem i:musicalItems) {
