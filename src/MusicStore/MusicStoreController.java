@@ -94,11 +94,12 @@ public class MusicStoreController {
     public void editMusicItem(int musicIndex, int editIndex, String value){
         if(musicIndex<0||musicIndex>=musicalItems.size())return;
         MusicalItem tempMusic = musicalItems.get(musicIndex);
+        //musicalItems.remove(tempMusic);
         switch (editIndex) {
             case 1: tempMusic.setMusicName(value); break;
             case 2: 
                 int catIndex = Integer.parseInt(value);
-                tempMusic.setCategory(getCategory(catIndex));
+                tempMusic.setCategory(getCategory(catIndex-1));
                 break;
             case 3: tempMusic.setDuration(value); break;
             case 4: tempMusic.setDescription(value); break;
@@ -115,7 +116,7 @@ public class MusicStoreController {
             default:
                 throw new AssertionError();
         }
-            
+       // musicalItems.add(tempMusic);
     }
     public void browse(int searchIndex, String value){
         ArrayList<MusicalItem> items = new ArrayList<MusicalItem>();

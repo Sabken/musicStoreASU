@@ -277,7 +277,8 @@ public class Phase1Main {
                                                     if(choice== 2) shop.browseCategory();
                                                     System.out.print("Enter value: ");
                                                     input.nextLine();
-                                                    String searchValue=input.nextLine();
+                                                    String editValue=input.nextLine();
+                                                    shop.editMusicItem(musicIndex, choice, editValue);
                                                     break;
                                                 case 1:
                                                     System.out.print("Enter item Index: ");
