@@ -93,8 +93,8 @@ public class MusicalItem {
     }
 
    
-    public String toString(int id) {
-        return id + "\t " + musicName + "\t " + category + "\t " + duration + "\t " + description + "\t " + releaseDate + "\t " + quantity + "\t " + artist + "\t " + price 
+    public String toString(int index) {
+        return index + "\t " + musicName + "\t " + category + "\t " + duration + "\t " + description + "\t " + releaseDate + "\t " + quantity + "\t " + artist + "\t " + price 
                 +"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
     }
    

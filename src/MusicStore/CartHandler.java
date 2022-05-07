@@ -12,7 +12,7 @@ public class CartHandler {
         cartItems = new HashMap<MusicalItem, Integer>();
     }
     
-    public Boolean addItem(MusicalItem item, int amount){
+    public boolean addItem(MusicalItem item, int amount){
         if(cartItems.containsKey(item)){
             amount += cartItems.get(item);
         }
@@ -27,7 +27,9 @@ public class CartHandler {
     public void removeItem(MusicalItem item){
         cartItems.remove(item);
     }
-    
+    public boolean isEmpty(){
+        return !cartItems.isEmpty();
+    }
      public void removeItem(MusicalItem item, int amount){
         if(cartItems.containsKey(item)){
             int tempAmount = cartItems.get(item) - amount;

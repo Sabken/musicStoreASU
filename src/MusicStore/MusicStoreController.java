@@ -16,11 +16,16 @@ public class MusicStoreController {
     
     private UserCustomer tempCustomer;    
     private UserAdmin tempAdmin;
-
+    private Object[] searchResult;
+    
+    
+    private CartHandler cart;
+    private ArrayList<String[]> cartItems;
     public MusicStoreController() {
         musicalItems = new HashSet<MusicalItem>();
         customers = new HashSet<UserBase>();
         admins = new HashSet<UserBase>();
+        searchResult = new Object[0];
     }
     
     private UserBase userLogin(String username, String password, Set<UserBase> users){
@@ -43,14 +48,19 @@ public class MusicStoreController {
     public void adminLogout(){
         Authenticator.logout(tempAdmin);
     }
-    public Boolean addCustmer(UserCustomer customer)
+    public boolean addCustmer(UserCustomer customer)
     {
         return customers.add(customer);
     }
     private void showMusic(Object[] items){
-        System.out.println("id "+"\t musicName" + "\t category"  + "\t duration" + "\t description=" + "\t releaseDate"+ "\t quantity" + "\t artist" + "\t price");
-        for (int i = 0; i < items.length; i++) {
-            MusicalItem tempMusic = (MusicalItem)items[i]; 
+        searchResult = items;
+        if(searchResult.length==0){
+            System.out.println("----------------------No Musical Items to Show----------------------");
+            return;
+        }
+        System.out.println("# "+"\t musicName" + "\t category"  + "\t duration" + "\t description" + "\t releaseDate"+ "\t quantity" + "\t artist" + "\t price");
+        for (int i = 0; i < searchResult.length; i++) {
+            MusicalItem tempMusic = (MusicalItem)searchResult[i]; 
             System.out.println(tempMusic.toString(i+1));
         }
     }
@@ -58,13 +68,60 @@ public class MusicStoreController {
     public void browse(){
         showMusic(musicalItems.toArray());
     }
-    public Boolean addAdmin(UserAdmin admin)
+    public boolean isThereItemsFound(){
+        return searchResult.length>0;
+    }
+    public void browse(int searchIndex, String value){
+        ArrayList<MusicalItem> items = new ArrayList<MusicalItem>();
+        Boolean isMatch = false;
+        for(MusicalItem i: musicalItems){
+            isMatch = false;
+            switch (searchIndex) {
+                case 1: isMatch = i.getMusicName().equals(value); break;
+                case 2: isMatch = i.getCategory().contains(value); break;
+                case 3: isMatch = i.getArtist().equals(value); break;
+                default:
+                    throw new AssertionError();
+            }
+            if(isMatch)
+                items.add(i);
+        }
+        showMusic(items.toArray());
+    }
+    public boolean addAdmin(UserAdmin admin)
     {
         return admins.add(admin);
     }
-    
-    public Boolean addMusic(MusicalItem item)
+    public boolean addToCart(int musicIndex,int amount){
+        if(musicIndex<1 || musicIndex>searchResult.length)
+            return false;
+        if(cart == null) cart = new CartHandler();
+        cart.addItem(((MusicalItem)searchResult[musicIndex-1]), amount);
+        return true;
+    }
+    public boolean removeFormCart(int itemIndex){
+        return true;
+    }
+    public boolean addMusic(MusicalItem item)
     {
         return musicalItems.add(item);
+    }
+    public boolean isThereCart(){
+        return cart != null && !cart.isEmpty();
+    }
+    public boolean browseCart(){
+        if(!isThereCart()){
+          System.out.println("----------------------No Cart Items to Show----------------------");
+          return false;
+        }
+         System.out.println("# "+"\t musicName" + "\t amount");
+         cartItems = cart.browesItem();
+         int index = 1;
+         for (String[] i : cartItems) {
+              System.out.println(index + "\t " + i[0] + "\t " + i[1]  );
+              System.out.println("\n-----------------------------------------------------------");
+              index++;
+        }
+        return true;
     }
 }

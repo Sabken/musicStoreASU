@@ -51,7 +51,7 @@ public class Phase1Main {
                     case 1:
                         break;
                     default:
-                        System.out.println("Invalid choice!!!");
+                        System.err.println("Invalid choice!!!");
                         break;
                 }
             }}
@@ -79,7 +79,7 @@ public class Phase1Main {
                     case 1:
                         break;
                     default:
-                        System.out.println("Invalid choice!!!");
+                        System.err.println("Invalid choice!!!");
                         break;
                 }
             }}
@@ -109,19 +109,50 @@ public class Phase1Main {
                             if(!tempCustomer.isIsLoggedIn())throw new SecurityException("Auth Erorr");
                             Customer:{
                                 while (true) {
-                                    System.out.print("1.Show Music\t2.Find Music\t3.Logout <=\nYour choice: ");
+                                    Boolean canAddToCart = false;
+                                    System.out.print("1.Show Music\t2.Find Music\t3.Cart\t4.Logout <=\nYour choice: ");
                                     choice=input.nextInt();
                                     switch (choice) {
                                         case 1:
                                             shop.browse();
+                                            canAddToCart = shop.isThereItemsFound();
                                             break;
                                         case 2:
+                                            System.out.print("Find By\n"
+                                                    + "1.Music Name\n2.Catgory\n3.Arties Name <=\nYour choice: ");
+                                            choice=input.nextInt();
+                                            if(choice<1||choice<3) {  System.err.println("Invalid choice!!!"); break;}
+                                            System.out.print("Enter value: ");
+                                            String searchValue=input.nextLine();
+                                            shop.browse(choice, searchValue);
+                                            canAddToCart = shop.isThereItemsFound();
                                             break;
                                         case 3:
+                                            break;
+                                        case 4:
                                             shop.customerLogout();
                                             break Customer;
                                         default:
                                             throw new AssertionError();
+                                    }
+                                    if(canAddToCart){
+                                        while (canAddToCart) {                                            
+                                            System.out.print("1.Add Music to Cart\t2.Back<=\nYour choice: ");
+                                            choice=input.nextInt();
+                                            switch (choice) {
+                                                case 2: canAddToCart =false; break;
+                                                case 1: 
+                                                    System.out.print("Enter Muisc Index: ");
+                                                    choice=input.nextInt();
+                                                    System.out.print("Enter Amount: ");
+                                                    int value=input.nextInt();
+                                                    shop.addToCart(choice, value);
+                                                    break;
+                                                default:
+                                                     System.err.println("Invalid choice!!!\n");
+                                            }
+                                        }
+                                       
                                     }
                                     
                                 }
@@ -136,7 +167,7 @@ public class Phase1Main {
                         System.out.println("Fuck you");
                         break;
                     default:
-                        throw new AssertionError();
+                        System.err.println("Invalid choice!!!");
                 }
             }
         }
