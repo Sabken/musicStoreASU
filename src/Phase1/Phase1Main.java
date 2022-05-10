@@ -4,43 +4,6 @@ import MusicStore.*;
 import java.util.Date;
 import java.util.Scanner;
 public class Phase1Main {
-    public static void Init(MusicStoreController shop){
-        
-        MusicCategory category1 = new MusicCategory("Rap");      
-        MusicCategory category2 = new MusicCategory("Habd");
-        MusicCategory category3 = new MusicCategory("Java");
-        shop.AddCategory(category1);
-        shop.AddCategory(category2);
-        shop.AddCategory(category3);
-
-        //----------------------------------------------------------------------
-        UserCustomer customer1 = new UserCustomer(123,"Emad","Khalifa","omda",
-                "123");
-        UserCustomer customer2 = new UserCustomer(5555,"Amir","Tarek","amir5",
-                "0987654321");
-        shop.addCustmer(customer1);
-        shop.addCustmer(customer2);        
-        //----------------------------------------------------------------------
-        
-        UserAdmin admin1 = new UserAdmin(123,"Mahmoud","Adel","jumbo",
-                "01022631173");
-        UserAdmin admin2 = new UserAdmin(5555,"Mohamed","Abdelfattah","botswana"
-                ,"01155646707");
-        UserAdmin admin3 = new UserAdmin(555235,"Mohamed","Abdelfattah","la"
-                ,"22");
-        shop.addAdmin(admin1);
-        shop.addAdmin(admin2);
-        shop.addAdmin(admin3);
-        //----------------------------------------------------------------------
-        
-        MusicalItem music1 = new MusicalItem("seto ana", "03:00", "a ya seto ana", "21/03/1999", 111, "Akram Hossny", 10,category1);
-        MusicalItem music2 = new MusicalItem("bosbos", "02:00", "ana bosbos basbabes", "21/03/1999", 11, "Akram Hossny", 20,category2);
-        MusicalItem music3 = new MusicalItem("sha2ltony fei ba7r bera", "03:10", "do3'ry seka anty el amira", "21/03/1999", 211, "Hamo Beka", 0,category3);
-        shop.addMusic(music1);
-        shop.addMusic(music2);
-        shop.addMusic(music3);
-
-    }
     
     public static UserCustomer customerLogin(MusicStoreController shop,Scanner input){
         UserCustomer tempCustomer = null;

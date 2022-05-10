@@ -23,16 +23,31 @@ public class MusicStoreController {
     private CartHandler cart;
     private ArrayList<String[]> cartItems;
     private Order tempOrder;
-    
+    private accessDB access;
     public MusicStoreController() {
         musicalItems = new ArrayList<MusicalItem>();
         customers = new HashSet<UserBase>();
         admins = new HashSet<UserBase>();
         searchResult = new Object[0];
         categoryHandler = new CategoryHandler();
+        loadData();
+        if(this.admins.size()==0|| this.customers.size()==0)
+            Init();
     }
     
-    
+    private void loadData(){
+        
+        try {  
+            this.musicalItems = ((ArrayList<MusicalItem>)access.retrive("MusicItem"));
+            this.categoryHandler.setCategories((ArrayList<MusicCategory>)access.retrive("Category"));
+            this.admins = ((Set<UserBase>)access.retrive("Admin"));
+            this.customers = ((Set<UserBase>)access.retrive("Customer"));
+        } catch (SQLException ex) {
+            Logger.getLogger(MusicStoreController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       
+    }
     private UserBase userLogin(String username, String password, Set<UserBase> users){
         return Authenticator.login(username, password, users);
     }
@@ -218,4 +233,44 @@ public class MusicStoreController {
            }
        }
     }
+    
+    
+    void Init(){
+        
+        MusicCategory category1 = new MusicCategory("Rap");      
+        MusicCategory category2 = new MusicCategory("Habd");
+        MusicCategory category3 = new MusicCategory("Java");
+        this.AddCategory(category1);
+        this.AddCategory(category2);
+        this.AddCategory(category3);
+
+        //----------------------------------------------------------------------
+        UserCustomer customer1 = new UserCustomer(123,"Emad","Khalifa","omda",
+                "123");
+        UserCustomer customer2 = new UserCustomer(5555,"Amir","Tarek","amir5",
+                "0987654321");
+        this.addCustmer(customer1);
+        this.addCustmer(customer2);        
+        //----------------------------------------------------------------------
+        
+        UserAdmin admin1 = new UserAdmin(123,"Mahmoud","Adel","jumbo",
+                "01022631173");
+        UserAdmin admin2 = new UserAdmin(5555,"Mohamed","Abdelfattah","botswana"
+                ,"01155646707");
+        UserAdmin admin3 = new UserAdmin(555235,"Mohamed","Abdelfattah","la"
+                ,"22");
+        this.addAdmin(admin1);
+        this.addAdmin(admin2);
+        this.addAdmin(admin3);
+        //----------------------------------------------------------------------
+        
+        MusicalItem music1 = new MusicalItem("seto ana", "03:00", "a ya seto ana", "21/03/1999", 111, "Akram Hossny", 10,category1);
+        MusicalItem music2 = new MusicalItem("bosbos", "02:00", "ana bosbos basbabes", "21/03/1999", 11, "Akram Hossny", 20,category2);
+        MusicalItem music3 = new MusicalItem("sha2ltony fei ba7r bera", "03:10", "do3'ry seka anty el amira", "21/03/1999", 211, "Hamo Beka", 0,category3);
+        this.addMusic(music1);
+        this.addMusic(music2);
+        this.addMusic(music3);
+
+    }
+    
 }
