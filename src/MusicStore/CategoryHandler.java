@@ -2,13 +2,12 @@
 package MusicStore;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 public class CategoryHandler {
     private ArrayList<MusicCategory> categories;
     private MusicCategory defaultCategory;
     public CategoryHandler() {
         defaultCategory= new MusicCategory("unknown");
-        categories = new ArrayList<MusicCategory>();
+        categories = new ArrayList<>();
     }
     
     public boolean addNewCategory(MusicCategory _category){

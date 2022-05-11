@@ -9,7 +9,7 @@ public class CartHandler {
     private HashMap<MusicalItem,Integer> cartItems;
 
     public CartHandler() {
-        cartItems = new HashMap<MusicalItem, Integer>();
+        cartItems = new HashMap<>();
     }
     
     public boolean addItem(MusicalItem item, int amount){

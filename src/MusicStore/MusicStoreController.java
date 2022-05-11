@@ -1,14 +1,9 @@
 
 package MusicStore;
-import java.sql.SQLException;
-import java.util.AbstractSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 public class MusicStoreController {
     private ArrayList<MusicalItem> musicalItems;
     private Set<UserBase> customers;
@@ -25,9 +20,9 @@ public class MusicStoreController {
     private Order tempOrder;
     
     public MusicStoreController() {
-        musicalItems = new ArrayList<MusicalItem>();
-        customers = new HashSet<UserBase>();
-        admins = new HashSet<UserBase>();
+        musicalItems = new ArrayList<>();
+        customers = new HashSet<>();
+        admins = new HashSet<>();
         searchResult = new Object[0];
         categoryHandler = new CategoryHandler();
     }
@@ -94,7 +89,6 @@ public class MusicStoreController {
     public void editMusicItem(int musicIndex, int editIndex, String value){
         if(musicIndex<0||musicIndex>=musicalItems.size())return;
         MusicalItem tempMusic = musicalItems.get(musicIndex);
-        //musicalItems.remove(tempMusic);
         switch (editIndex) {
             case 1: tempMusic.setMusicName(value); break;
             case 2: 
@@ -116,11 +110,10 @@ public class MusicStoreController {
             default:
                 throw new AssertionError();
         }
-       // musicalItems.add(tempMusic);
     }
     public void browse(int searchIndex, String value){
-        ArrayList<MusicalItem> items = new ArrayList<MusicalItem>();
-        Boolean isMatch = false;
+        ArrayList<MusicalItem> items = new ArrayList<>();
+        Boolean isMatch;
         for(MusicalItem i: musicalItems){
             isMatch = false;
             switch (searchIndex) {

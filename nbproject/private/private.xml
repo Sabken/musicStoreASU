@@ -6,10 +6,13 @@
             <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/MusicStore/CategoryHandler.java</file>
             <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/MusicStore/MusicStoreController.java</file>
             <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/Phase1/Phase1Main.java</file>
+            <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/MusicStore/UserCustomer.java</file>
+            <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/MusicStore/UserBase.java</file>
             <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/MusicStore/Order.java</file>
-            <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/MusicStore/CartHandler.java</file>
             <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/MusicStore/MusicalItem.java</file>
             <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/MusicStore/MusicCategory.java</file>
+            <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/MusicStore/UserAdmin.java</file>
+            <file>file:/E:/Emad/D/emad%20personal/project/musicStoreASU/src/MusicStore/Authenticator.java</file>
         </group>
     </open-files>
 </project-private>

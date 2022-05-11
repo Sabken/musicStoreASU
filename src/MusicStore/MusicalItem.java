@@ -113,7 +113,7 @@ public class MusicalItem {
     
     @Override
     public String toString() {
-        return "MusicalItem{" + "musicName=" + musicName + ", category=" + category + ", duration=" + duration + ", description=" + description + ", releaseDate=" + releaseDate + ", quantity=" + quantity + ", artist=" + artist + ", price=" + price + '}';
+        return "MusicalItem1" + "musicName=" + musicName + ", category=" + category + ", duration=" + duration + ", description=" + description + ", releaseDate=" + releaseDate + ", quantity=" + quantity + ", artist=" + artist + ", price=" + price + '}';
     }
 
    
