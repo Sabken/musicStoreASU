@@ -52,7 +52,11 @@ public class UserAdmin extends UserBase {
 
     @Override
     public void setDBInfo(Object[] data) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      this.firstName = ((String) data[0]);
+       this.lastName = ((String) data[1]);
+       this.username = ((String) data[2]);
+       this.password = ((String) data[3]);
+       this.id = ((int) data[4]);
     }
    
    

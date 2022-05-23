@@ -1,6 +1,7 @@
 
 package Phase1;
 import MusicStore.*;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Scanner;
 public class Phase1Main {
@@ -62,12 +63,12 @@ public class Phase1Main {
         return tempAdmin;
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner input=new Scanner(System.in);
         int choice;
         MusicStoreController shop  =  new MusicStoreController();
         //----------------------------------------------------------------------
-        Init(shop);
+       // Init(shop);
         
         ExitCustomer:{
             while(true){

@@ -10,7 +10,15 @@ public class MusicalItem implements DataBaseHandler{
    int  quantity;
    String artist;
    double price;
+   int tempId;
 
+    public int getTempId() {
+        return tempId;
+    }
+
+    public void setTempId(int tempId) {
+        this.tempId = tempId;
+    }
     public MusicalItem() {
     }
 
@@ -143,7 +151,15 @@ public class MusicalItem implements DataBaseHandler{
 
     @Override
     public void setDBInfo(Object[] data) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+      this.musicName= ((String)data[0]);
+      this.category= new MusicCategory(((String)data[1]));
+      this.duration= ((String)data[2]);
+      this.description= ((String)data[3]);
+      this.releaseDate= ((String)data[4]);
+      this.quantity= ((int)data[5]);
+      this.artist= ((String)data[6]);
+      this.price= ((Double)data[7]);
+       
     }
    
    

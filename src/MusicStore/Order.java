@@ -1,6 +1,7 @@
 
 package MusicStore;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Order {
@@ -22,11 +23,12 @@ public class Order {
         items.add(item);
     }
     
-    public void Pay(){
+    public void Pay(accessDB db) throws SQLException{
         for (int i = 0; i < items.size(); i++) {
             OrderItem item = items.get(i);
             int amount  = item.musicalItem.getQuantity() - item.amount;
             item.musicalItem.setQuantity(amount);
+            db.update(item.musicalItem.musicName, "QUANTITY", String.valueOf(amount));
         }
     } 
     public double getTotalPrice(){

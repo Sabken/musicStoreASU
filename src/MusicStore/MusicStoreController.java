@@ -24,17 +24,38 @@ public class MusicStoreController {
     private ArrayList<String[]> cartItems;
     private Order tempOrder;
     private accessDB access;
-    public MusicStoreController() {
+    public MusicStoreController() throws SQLException {
         musicalItems = new ArrayList<MusicalItem>();
         customers = new HashSet<UserBase>();
         admins = new HashSet<UserBase>();
         searchResult = new Object[0];
         categoryHandler = new CategoryHandler();
+        access = new accessDB();
         loadData();
         if(this.admins.size()==0|| this.customers.size()==0)
+        { 
             Init();
+
+        }
+        
+    }
+
+    public ArrayList<String[]> getCartItems() {
+        return cartItems;
+    }
+
+    public Object[] getSearchResult() {
+        return searchResult;
     }
     
+    public UserCustomer getTempCustomer() {
+        return tempCustomer;
+    }
+
+    public UserAdmin getTempAdmin() {
+        return tempAdmin;
+    }
+   
     private void loadData(){
         
         try {  
@@ -45,8 +66,6 @@ public class MusicStoreController {
         } catch (SQLException ex) {
             Logger.getLogger(MusicStoreController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-       
     }
     private UserBase userLogin(String username, String password, Set<UserBase> users){
         return Authenticator.login(username, password, users);
@@ -64,8 +83,12 @@ public class MusicStoreController {
     public void customerLogout(){
         Authenticator.logout(tempCustomer);
     }
-    public boolean AddCategory(MusicCategory value){
-        return categoryHandler.addNewCategory(value);
+    public boolean AddCategory(MusicCategory value) throws SQLException{
+       if(categoryHandler.addNewCategory(value)){
+           access.insert(value);
+           return true;
+       }
+       return false;
     }
     public void browseCategory(){
          System.out.println("# "+"\t Category");
@@ -78,9 +101,13 @@ public class MusicStoreController {
     public void adminLogout(){
         Authenticator.logout(tempAdmin);
     }
-    public boolean addCustmer(UserCustomer customer)
+    public boolean addCustmer(UserCustomer customer) throws SQLException
     {
-        return customers.add(customer);
+        if(customers.add(customer)){
+            access.insert(customer);
+            return true;
+        }
+        return false;
     }
     private void showMusic(Object[] items){
         searchResult = items;
@@ -91,6 +118,7 @@ public class MusicStoreController {
         System.out.println("# "+"\t musicName" + "\t category"  + "\t duration" + "\t description" + "\t releaseDate"+ "\t quantity" + "\t artist" + "\t price");
         for (int i = 0; i < searchResult.length; i++) {
             MusicalItem tempMusic = (MusicalItem)searchResult[i]; 
+            tempMusic.setTempId(i);
             System.out.println(tempMusic.toString(i+1));
         }
     }
@@ -99,15 +127,19 @@ public class MusicStoreController {
         showMusic(musicalItems.toArray());
     }
     
-    public void removeItem(int index){
+    public void removeItem(int index) throws SQLException{
         if(index>=0&&index<musicalItems.size())
+        { 
+            access.delete("MusicItem",musicalItems.get(index).musicName );
             musicalItems.remove(index);
+        }
     }
     public boolean isThereItemsFound(){
        return searchResult.length>0;
     }
-    public void editMusicItem(int musicIndex, int editIndex, String value){
+    public void editMusicItem(int musicIndex, int editIndex, String value) throws SQLException{
         if(musicIndex<0||musicIndex>=musicalItems.size())return;
+        String []arrEdits = {"MUSICNAME", "CATEGORY", "DURATION", "DESCRIPTION", "RELEASEDATE", "QUANTITY","ARTIST","PRICE"};
         MusicalItem tempMusic = musicalItems.get(musicIndex);
         //musicalItems.remove(tempMusic);
         switch (editIndex) {
@@ -131,6 +163,7 @@ public class MusicStoreController {
             default:
                 throw new AssertionError();
         }
+        access.update(tempMusic.musicName, arrEdits[editIndex-1], value);
        // musicalItems.add(tempMusic);
     }
     public void browse(int searchIndex, String value){
@@ -153,9 +186,14 @@ public class MusicStoreController {
        
         showMusic(items.toArray());
     }
-    public boolean addAdmin(UserAdmin admin)
+    public boolean addAdmin(UserAdmin admin) throws SQLException
     {
-        return admins.add(admin);
+        if(admins.add(admin))
+        {
+            access.insert(admin);
+            return true;
+        }
+        return false;
     }
     public boolean addToCart(int musicIndex,int amount){
         if(musicIndex<1 || musicIndex>searchResult.length)
@@ -184,17 +222,18 @@ public class MusicStoreController {
         return tempOrder.getTotalPrice();
     }
     
-    public void PayOrder(){
-        tempOrder.Pay();
+    public void PayOrder() throws SQLException{
+        tempOrder.Pay(access);
         cart = null;
         
     }
     public void CheckoutOrder(){
        tempOrder = cart.Checkout(tempCustomer);
     }
-    public void addMusic(MusicalItem item)
+    public void addMusic(MusicalItem item) throws SQLException
     {
          musicalItems.add(item);
+         access.insert(item);
     }
     
     
@@ -225,9 +264,11 @@ public class MusicStoreController {
         return true;
     }
     
-    public void removeCategory(int index){
+    public void removeCategory(int index) throws SQLException{
+        MusicCategory c = categoryHandler.getCategories().get(index);
        if( categoryHandler.removeCategory(index))
        {
+           access.delete("Category",c.toString());
            for (MusicalItem i:musicalItems) {
                categoryHandler.verfiyCategory(i);
            }
@@ -235,7 +276,7 @@ public class MusicStoreController {
     }
     
     
-    void Init(){
+    void Init() throws SQLException{
         
         MusicCategory category1 = new MusicCategory("Rap");      
         MusicCategory category2 = new MusicCategory("Habd");
@@ -266,7 +307,7 @@ public class MusicStoreController {
         
         MusicalItem music1 = new MusicalItem("seto ana", "03:00", "a ya seto ana", "21/03/1999", 111, "Akram Hossny", 10,category1);
         MusicalItem music2 = new MusicalItem("bosbos", "02:00", "ana bosbos basbabes", "21/03/1999", 11, "Akram Hossny", 20,category2);
-        MusicalItem music3 = new MusicalItem("sha2ltony fei ba7r bera", "03:10", "do3'ry seka anty el amira", "21/03/1999", 211, "Hamo Beka", 0,category3);
+        MusicalItem music3 = new MusicalItem("sha2ltony fei ba7r bera", "03:10", "do3ry seka anty el amira", "21/03/1999", 211, "Hamo Beka", 0,category3);
         this.addMusic(music1);
         this.addMusic(music2);
         this.addMusic(music3);

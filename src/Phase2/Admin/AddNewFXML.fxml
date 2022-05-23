@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="Phase2.Admin.AddNewFXMLController">
+   <children>
+      <Button layoutX="6.0" layoutY="2.0" mnemonicParsing="false" onAction="#onBack" text="Back" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <TextField fx:id="name" layoutX="226.0" layoutY="36.0" />
+      <TextField fx:id="price" layoutX="226.0" layoutY="79.0" />
+      <TextField fx:id="description" layoutX="226.0" layoutY="116.0" />
+      <TextField fx:id="artist" layoutX="226.0" layoutY="160.0" />
+      <TextField layoutX="226.0" layoutY="216.0" />
+      <TextField layoutX="226.0" layoutY="257.0" />
+      <TextField layoutX="226.0" layoutY="293.0" />
+      <ComboBox layoutX="226.0" layoutY="337.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>

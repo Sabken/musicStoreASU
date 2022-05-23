@@ -25,30 +25,30 @@ public class accessDB<E,T> {
        if(obj instanceof UserAdmin){
         Object [] info = ((UserAdmin) obj).getDBInfo();
         sql = "INSERT INTO ADMIN (ID, FIRSTNAME, LASTNAME,USERNAME, PASSWORD) VALUES "
-              + "("+ ((String)info[4]) +",'"+ ((String)info[1]) +"','"+ ((String)info[2]) +"','"+
-                ((String)info[3]) +"','"+ ((String)info[4])+"')";
+              + "("+ ((int)info[4]) +",'"+ ((String)info[0]) +"','"+ ((String)info[1]) +"','"+
+                ((String)info[2]) +"','"+ ((String)info[3])+"')";
                 
        }
        else if(obj instanceof UserCustomer){
             Object [] info=((UserCustomer) obj).getDBInfo();
            
            sql = "INSERT INTO CUSTOMER (SSN, FIRSTNAME, LASTNAME,USERNAME, PASSWORD) VALUES "
-             + "("+ ((String)info[4]) +",'"+ ((String)info[1]) +"','"+ ((String)info[2]) +"','"+
-                ((String)info[3]) +"','"+ ((String)info[4])+"')";
+             + "("+ ((int)info[4]) +",'"+ ((String)info[0]) +"','"+ ((String)info[1]) +"','"+
+                ((String)info[2]) +"','"+ ((String)info[3])+"')";
              
        }
        else if(obj instanceof MusicalItem){
            Object []info=((MusicalItem) obj).getDBInfo();
-           sql = "INSERT INTO MUSICITEM (MUSICNAME, CATEGOTY, DURATION, DESCRIPTION, RELEASEDATE, QUANTITY,ARTIST,PRICE) VALUES "
-              + "('"+ ((String)info[0]) +"',"+ ((String)info[1]) +","+ ((String)info[2]) +","+
-                ((String)info[3]) +","+ ((String)info[4])+",'"+ ((int)info[5])+","+ ((String)info[6])+","+ ((double)info[7])+"')";
+           sql = "INSERT INTO MUSICITEM (MUSICNAME, CATEGORY, DURATION, DESCRIPTION, RELEASEDATE, QUANTITY,ARTIST,PRICE) VALUES "
+              + "('"+ ((String)info[0]) +"','"+ ((String)info[1]) +"','"+ ((String)info[2]) +"','"+
+                ((String)info[3]) +"','"+ ((String)info[4])+"',"+ ((int)info[5])+",'"+ ((String)info[6])+"',"+ ((double)info[7])+")";
            
        
        }
        else if(obj instanceof MusicCategory){
           
-           sql = "INSERT INTO CATEWGORY (CATEGORY) VALUES "
-              + "('"+ ((CategoryHandler)obj).toString() +"')";
+           sql = "INSERT INTO CATEGORY (CATEGORY) VALUES "
+              + "('"+ ((MusicCategory)obj).toString() +"')";
            
        
        }
@@ -89,7 +89,7 @@ public class accessDB<E,T> {
                 sql = "SELECT * FROM MUSICITEM ";
                 break;
             case "Category":  
-                 sql = "SELECT * FROM CATEWGORY ";
+                 sql = "SELECT * FROM CATEGORY ";
                 break;
             default:
                 break;
@@ -104,7 +104,7 @@ public class accessDB<E,T> {
                 info[1]=rs.getString("LASTNAME");
                 info[2]=rs.getString("USERNAME");
                 info[3]=rs.getString("PASSWORD");
-                info[4]=rs.getString("ID");
+                info[4]=rs.getInt("ID");
                 
                 UserAdmin s=new UserAdmin();
                 s.setDBInfo(info);
@@ -116,7 +116,7 @@ public class accessDB<E,T> {
                 info[1]=rs.getString("LASTNAME");
                 info[2]=rs.getString("USERNAME");
                 info[3]=rs.getString("PASSWORD");
-                info[4]=rs.getString("SSN");
+                info[4]=rs.getInt("SSN");
                 UserCustomer c1=new UserCustomer();
                 c1.setDBInfo(info);
                 objs2.add((E) c1); 
@@ -127,14 +127,15 @@ public class accessDB<E,T> {
                 
                   info=new Object[8];
                   info[0]=rs.getString("MUSICNAME");
-                  info[1]=rs.getString("CATEGOTY");
+                  info[1]=rs.getString("CATEGORY");
                   info[2]=rs.getString("DURATION");
                   info[3]=rs.getString("DESCRIPTION");
                   info[4]=rs.getString("RELEASEDATE");
                   info[5]=rs.getInt("QUANTITY");
-                  info[5]=rs.getString("ARTIST");
-                  info[5]=rs.getDouble("PRICE");
+                  info[6]=rs.getString("ARTIST");
+                  info[7]=rs.getDouble("PRICE");
                   MusicalItem item= new MusicalItem();
+                  item.setDBInfo(info);
                   objs.add((E) item);
                 break;
             case "Category":  
