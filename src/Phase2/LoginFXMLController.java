@@ -37,7 +37,10 @@ public class LoginFXMLController implements Initializable {
         if(roleIndex == 0){
            UserAdmin f =   shop.adminLogin(usernameStr, passwordStr);
            if(f == null)System.err.println("no Admin");
-           else System.err.println("Admin");
+           else{
+                Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Customer/AdminMainFXML.fxml"));
+                GUIMain.instance.LoadPage(root);
+           }
         }
         else if(roleIndex == 1 ){
              UserCustomer f =   shop.customerLogin(usernameStr, passwordStr);
