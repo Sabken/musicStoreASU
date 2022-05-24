@@ -19,7 +19,9 @@ public class AdminMainFXMLController implements Initializable {
     private Label title;
 
     @FXML
-    void onCategory(ActionEvent event) {
+    void onCategory(ActionEvent event) throws IOException {
+         Parent root = FXMLLoader.load(getClass().getResource("/Phase2/CategoryFXML.fxml"));
+         GUIMain.instance.LoadPage(root);
 
     }
 
@@ -31,8 +33,9 @@ public class AdminMainFXMLController implements Initializable {
     }
 
     @FXML
-    void onMuisc(ActionEvent event) {
-
+    void onMuisc(ActionEvent event) throws IOException {
+         Parent root = FXMLLoader.load(getClass().getResource("/Phase2/MusicFXML.fxml"));
+         GUIMain.instance.LoadPage(root);
     }
 
     @Override
