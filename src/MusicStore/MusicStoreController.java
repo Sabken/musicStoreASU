@@ -9,6 +9,14 @@ public class MusicStoreController {
     private Set<UserBase> customers;
     private Set<UserBase> admins;
     private CategoryHandler categoryHandler;
+
+    public CategoryHandler getCategoryHandler() {
+        return categoryHandler;
+    }
+
+    public void setCategoryHandler(CategoryHandler categoryHandler) {
+        this.categoryHandler = categoryHandler;
+    }
     
     private UserCustomer tempCustomer;    
     private UserAdmin tempAdmin;
@@ -16,7 +24,7 @@ public class MusicStoreController {
     
     
     private CartHandler cart;
-    private ArrayList<String[]> cartItems;
+    private ArrayList<String[]> cartItems = new ArrayList<>();
     private Order tempOrder;
     
     public MusicStoreController() {
@@ -55,6 +63,13 @@ public class MusicStoreController {
         }
     }
     
+    public void browseCategoryEdit(){
+         System.out.println("# "+"\t Category");
+         
+         for (int i = 0; i < categoryHandler.getCategories().size(); i++) {
+             System.out.println((i)+"\t"+categoryHandler.getCategories().get(i).toString());
+        }
+    }
     public void adminLogout(){
         Authenticator.logout(tempAdmin);
     }
@@ -89,27 +104,43 @@ public class MusicStoreController {
     public void editMusicItem(int musicIndex, int editIndex, String value){
         if(musicIndex<0||musicIndex>=musicalItems.size())return;
         MusicalItem tempMusic = musicalItems.get(musicIndex);
+<<<<<<< Updated upstream
+=======
+        Object val = value;
+        //musicalItems.remove(tempMusic);
+>>>>>>> Stashed changes
         switch (editIndex) {
             case 1: tempMusic.setMusicName(value); break;
             case 2: 
-                int catIndex = Integer.parseInt(value);
-                tempMusic.setCategory(getCategory(catIndex-1));
+                try{
+                    int catIndex = Integer.parseInt(value);
+                    val =getCategory(catIndex).toString();
+                    tempMusic.setCategory(getCategory(catIndex));
+                }catch(Exception e){}
+                
                 break;
             case 3: tempMusic.setDuration(value); break;
             case 4: tempMusic.setDescription(value); break;
             case 5: tempMusic.setReleaseDate(value); break;
             case 6: 
                 int q = Integer.parseInt(value); 
+                val = q;
                 tempMusic.setQuantity(q);
                 break;
             case 7: tempMusic.setArtist(value); break;
             case 8:
                 double p = Double.parseDouble(value); 
+                val = p;
                 tempMusic.setPrice(p);
                 break;
             default:
                 throw new AssertionError();
         }
+<<<<<<< Updated upstream
+=======
+        access.update(tempMusic.musicName, arrEdits[editIndex-1], val);
+       // musicalItems.add(tempMusic);
+>>>>>>> Stashed changes
     }
     public void browse(int searchIndex, String value){
         ArrayList<MusicalItem> items = new ArrayList<>();
@@ -190,6 +221,8 @@ public class MusicStoreController {
     public boolean browseCart(){
         if(!isThereCart()){
           System.out.println("----------------------No Cart Items to Show----------------------");
+                  cartItems = new ArrayList<>();
+
           return false;
         }
          System.out.println("# "+"\t musicName" + "\t amount");
@@ -207,7 +240,9 @@ public class MusicStoreController {
        if( categoryHandler.removeCategory(index))
        {
            for (MusicalItem i:musicalItems) {
-               categoryHandler.verfiyCategory(i);
+               if(!categoryHandler.verfiyCategory(i)){
+                   access.update(i.musicName,"CATEGORY", i.category.getCategoryName());
+               }
            }
        }
     }

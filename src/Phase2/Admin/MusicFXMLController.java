@@ -1,0 +1,153 @@
+package Phase2.Admin;
+
+import MusicStore.*;
+import Phase2.GUIMain;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+public class MusicFXMLController implements Initializable {
+
+      private  MusicStoreController shop;
+    @FXML
+  private TableColumn<MusicalItem, String> artist;
+
+    @FXML
+    private TableColumn<MusicalItem, String> category;
+
+    @FXML
+    private TableColumn<MusicalItem, String> description;
+
+    @FXML
+    private TableColumn<MusicalItem, String> duration;
+
+    @FXML
+    private TableColumn<MusicalItem, Integer>index;
+    @FXML
+    private TextField ecitValue;
+
+    @FXML
+    private ComboBox<String> editValue;
+
+    
+  
+
+    @FXML
+    private TextField indexEdit;
+
+   @FXML
+    private TableColumn<MusicalItem, String> name;
+     @FXML
+    private ComboBox<String> catDrop;
+    @FXML
+    private TableColumn<MusicalItem, Double> price;
+
+    @FXML
+    private TableColumn<MusicalItem, Integer> quantity;
+
+    @FXML
+    private TableColumn<MusicalItem, String> releaseDate;
+
+    @FXML
+    private TextField removeIndex;
+
+    @FXML
+    private TableView<MusicalItem> table;
+
+     @FXML
+    void onChangeDrop(ActionEvent event) {
+        if(editValue.getSelectionModel().getSelectedIndex()+1 == 2){
+            catDrop.setVisible(true);
+            ecitValue.setVisible(false);
+        }
+        
+        else{
+            catDrop.setVisible(false);
+            ecitValue.setVisible(true);
+        }
+    }
+    @FXML
+    void onAddNew(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Admin/AddNewFXML.fxml"));
+        GUIMain.instance.LoadPage(root);
+    }
+
+    @FXML
+    void onBack(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Admin/AdminMainFXML.fxml"));
+        GUIMain.instance.LoadPage(root);
+    }
+
+    @FXML
+    void onEdit(ActionEvent event) throws SQLException {
+          int i = Integer.parseInt(indexEdit.getText());
+          int edi = editValue.getSelectionModel().getSelectedIndex()+1;
+          if(edi == 2){
+                        shop.editMusicItem(i, edi,String.valueOf( catDrop.getSelectionModel().getSelectedIndex()));
+
+          }
+          else{
+                        shop.editMusicItem(i, edi, ecitValue.getText());
+
+          }
+          show();
+          System.err.println("Done");
+    }
+
+    @FXML
+    void onRemove(ActionEvent event) throws SQLException {
+        int i = Integer.parseInt(removeIndex.getText());
+        shop.removeItem(i);
+         show();
+    }
+
+     void show(){
+        shop.browse();
+        ObservableList<MusicalItem> list = FXCollections.observableArrayList();
+        table.setItems(list);
+
+        for (int i = 0; i < shop.getSearchResult().length; i++) {
+            list.add((MusicalItem) shop.getSearchResult()[i]);
+        }
+        
+        table.setItems(list);
+        table.refresh();
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        shop = GUIMain.instance.getShop();
+         name.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("musicName"));
+         price.setCellValueFactory(new PropertyValueFactory<MusicalItem,Double>("price"));
+         quantity.setCellValueFactory(new PropertyValueFactory<MusicalItem,Integer>("quantity"));
+         index.setCellValueFactory(new PropertyValueFactory<MusicalItem,Integer>("tempId"));
+         description.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("description"));
+         releaseDate.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("releaseDate"));
+         duration.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("duration"));
+         category.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("category"));
+         artist.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("artist"));
+          ObservableList<String> list = FXCollections.observableArrayList("musicName" , "category" ,"duration" , "description","releaseDate", "quantity" ,"artist","price");
+          editValue.setItems(list);
+           ObservableList<String> catList = FXCollections.observableArrayList();
+           for (int i = 0; i < shop.getCategoryHandler().getCategories().size(); i++) {
+            catList.add(shop.getCategoryHandler().getCategories().get(i).toString());
+        }
+           catDrop.setItems(catList);
+          catDrop.setVisible(false);
+         show();
+    }
+
+    
+}
