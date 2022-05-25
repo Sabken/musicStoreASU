@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 
 public class LoginFXMLController implements Initializable {
@@ -36,15 +37,27 @@ public class LoginFXMLController implements Initializable {
         String passwordStr = password.getText();
         if(roleIndex == 0){
            UserAdmin f =   shop.adminLogin(usernameStr, passwordStr);
-           if(f == null)System.err.println("no Admin");
+           if(f == null){
+                 Alert dg = new Alert(Alert.AlertType.ERROR);
+            dg.setTitle("Login");
+            dg.setContentText("Wrong Username or Password for Admin");
+            dg.setHeaderText("Music Store");
+            dg.showAndWait();
+           }
            else{
-                Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Customer/AdminMainFXML.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Admin/AdminMainFXML.fxml"));
                 GUIMain.instance.LoadPage(root);
            }
         }
         else if(roleIndex == 1 ){
              UserCustomer f =   shop.customerLogin(usernameStr, passwordStr);
-           if(f == null)System.err.println("no C");
+           if(f == null){
+                 Alert dg = new Alert(Alert.AlertType.ERROR);
+            dg.setTitle("Login");
+            dg.setContentText("Wrong Username or Password for Customer");
+            dg.setHeaderText("Music Store");
+            dg.showAndWait();
+           }
            else{
                 Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Customer/CustomerMainFXML.fxml"));
                 GUIMain.instance.LoadPage(root);

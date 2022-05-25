@@ -14,6 +14,14 @@ public class MusicStoreController {
     private Set<UserBase> customers;
     private Set<UserBase> admins;
     private CategoryHandler categoryHandler;
+
+    public CategoryHandler getCategoryHandler() {
+        return categoryHandler;
+    }
+
+    public void setCategoryHandler(CategoryHandler categoryHandler) {
+        this.categoryHandler = categoryHandler;
+    }
     
     private UserCustomer tempCustomer;    
     private UserAdmin tempAdmin;
@@ -141,29 +149,33 @@ public class MusicStoreController {
         if(musicIndex<0||musicIndex>=musicalItems.size())return;
         String []arrEdits = {"MUSICNAME", "CATEGORY", "DURATION", "DESCRIPTION", "RELEASEDATE", "QUANTITY","ARTIST","PRICE"};
         MusicalItem tempMusic = musicalItems.get(musicIndex);
+        Object val = value;
         //musicalItems.remove(tempMusic);
         switch (editIndex) {
             case 1: tempMusic.setMusicName(value); break;
             case 2: 
                 int catIndex = Integer.parseInt(value);
                 tempMusic.setCategory(getCategory(catIndex-1));
+                val = tempMusic.category.toString();
                 break;
             case 3: tempMusic.setDuration(value); break;
             case 4: tempMusic.setDescription(value); break;
             case 5: tempMusic.setReleaseDate(value); break;
             case 6: 
                 int q = Integer.parseInt(value); 
+                val = q;
                 tempMusic.setQuantity(q);
                 break;
             case 7: tempMusic.setArtist(value); break;
             case 8:
                 double p = Double.parseDouble(value); 
+                val= p;
                 tempMusic.setPrice(p);
                 break;
             default:
                 throw new AssertionError();
         }
-        access.update(tempMusic.musicName, arrEdits[editIndex-1], value);
+        access.update(tempMusic.musicName, arrEdits[editIndex-1], val);
        // musicalItems.add(tempMusic);
     }
     public void browse(int searchIndex, String value){
@@ -249,6 +261,7 @@ public class MusicStoreController {
         return cart != null && !cart.isEmpty();
     }
     public boolean browseCart(){
+        cartItems = new ArrayList<>();
         if(!isThereCart()){
           System.out.println("----------------------No Cart Items to Show----------------------");
           return false;
@@ -270,7 +283,9 @@ public class MusicStoreController {
        {
            access.delete("Category",c.toString());
            for (MusicalItem i:musicalItems) {
-               categoryHandler.verfiyCategory(i);
+              if(! categoryHandler.verfiyCategory(i)){
+                   access.update(i.musicName,"CATEGORY", i.getCategory().toString());
+              }
            }
        }
     }

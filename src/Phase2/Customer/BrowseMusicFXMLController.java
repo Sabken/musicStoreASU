@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -68,7 +69,20 @@ public class BrowseMusicFXMLController implements Initializable {
     void onAddToCart(ActionEvent event) {
         int indexCart = Integer.parseInt(musicIndex.getText());
         int amountT = Integer.parseInt(amount.getText());
-        shop.addToCart(indexCart, amountT);
+        if(shop.addToCart(indexCart+1, amountT)){
+            Alert dg = new Alert(Alert.AlertType.CONFIRMATION);
+            dg.setTitle("Cart");
+            dg.setContentText("Add to cart");
+            dg.setHeaderText("Music Store");
+            dg.showAndWait();
+        }
+        else{
+              Alert dg = new Alert(Alert.AlertType.WARNING);
+            dg.setTitle("Cart");
+            dg.setContentText("Try Again");
+            dg.setHeaderText("Music Store");
+            dg.showAndWait();
+        }
     }
 
     @FXML

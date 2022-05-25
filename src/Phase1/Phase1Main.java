@@ -97,12 +97,14 @@ public class Phase1Main {
                                             System.out.print("Find By\n"
                                                     + "1.Music Name\n2.Catgory\n3.Arties\n4.Soldout\n5.In Stock\nYour choice: ");
                                             choice=input.nextInt();
+                                           String searchValue="";
                                             if(choice<1||choice>5) {  System.err.println("Invalid choice!!!"); break;}
                                             if(choice== 2) shop.browseCategory();
-                                            if(choice !=4 || choice!=5)
+                                            if(!(choice ==4 || choice==5)){
                                                 System.out.print("Enter value: ");
                                             input.nextLine();
-                                            String searchValue=input.nextLine();
+                                             searchValue=input.nextLine();
+                                            }
                                             shop.browse(choice, searchValue);
                                             canAddToCart = shop.isThereItemsFound() && choice!=4;
                                             break;

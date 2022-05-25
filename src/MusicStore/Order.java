@@ -28,7 +28,7 @@ public class Order {
             OrderItem item = items.get(i);
             int amount  = item.musicalItem.getQuantity() - item.amount;
             item.musicalItem.setQuantity(amount);
-            db.update(item.musicalItem.musicName, "QUANTITY", String.valueOf(amount));
+            db.update(item.musicalItem.musicName, "QUANTITY", (amount));
         }
     } 
     public double getTotalPrice(){

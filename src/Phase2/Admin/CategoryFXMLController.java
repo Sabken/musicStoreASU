@@ -43,8 +43,14 @@ public class CategoryFXMLController  implements Initializable{
     }
     @FXML
     void onRemove(ActionEvent event) throws SQLException {
-        shop.removeCategory(shop.getCategoryHandler().getCategories().indexOf(catText.getText()));
-        show();
+        for (int i = 0; i < shop.getCategoryHandler().getCategories().size(); i++) {
+            if(shop.getCategoryHandler().getCategories().get(i).getCategoryName().endsWith(catText.getText())){
+                shop.removeCategory(i);
+                show();
+                catText.setText("");
+            }
+        }
+      
     }
     void show(){
          ObservableList<MusicCategory> list = FXCollections.observableArrayList();
@@ -52,11 +58,12 @@ public class CategoryFXMLController  implements Initializable{
             list.add(shop.getCategoryHandler().getCategories().get(i));
         }
         table.setItems(list);
+        table.refresh();
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         shop = GUIMain.instance.getShop();
-          category.setCellValueFactory(new PropertyValueFactory<MusicCategory,String>("category"));
+          category.setCellValueFactory(new PropertyValueFactory<MusicCategory,String>("categoryName"));
         show();
     }
 

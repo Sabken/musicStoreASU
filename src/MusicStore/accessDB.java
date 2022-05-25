@@ -14,7 +14,7 @@ import java.util.Set;
 
 
 public class accessDB<E,T> {
-    private final String connectionURL="jdbc:derby://localhost:1527/music;create=true";
+    private final String connectionURL="jdbc:derby://localhost:1527/musicdb;create=true";
     private String sql;
     private Connection conn;
     private Statement st;
@@ -61,12 +61,12 @@ public class accessDB<E,T> {
        conn = DriverManager.getConnection(connectionURL);
        st = conn.createStatement();
        if(value instanceof Double)
-          sql = "UPDATE MISUCITEM SET "+ValueName+" = '"+((double)value)+"' WHERE MUSICNAME = '"+idValue+"'";
+          sql = "UPDATE MUSICITEM SET "+ValueName+" = "+((double)value)+" WHERE MUSICNAME = '"+idValue+"'";
        else if(value instanceof Integer)
-          sql = "UPDATE MISUCITEM SET "+ValueName+" = '"+((int)value)+"' WHERE MUSICNAME = '"+idValue+"'";
+          sql = "UPDATE MUSICITEM SET "+ValueName+" = "+((int)value)+" WHERE MUSICNAME = '"+idValue+"'";
        else
-          sql = "UPDATE MISUCITEM SET "+ValueName+" = '"+((String)value)+"' WHERE MUSICNAME = '"+idValue+"'";
-       st.executeUpdate(sql);
+          sql = "UPDATE MUSICITEM SET "+ValueName+" = '"+((String)value)+"' WHERE MUSICNAME = '"+idValue+"'";
+       
        st.executeUpdate(sql);
        st.close(); 
        conn.close(); 
@@ -174,8 +174,9 @@ public class accessDB<E,T> {
             case "MusicItem":
              tableName = "MUSICITEM";
               sql = "DELETE FROM "+ tableName+" WHERE MUSICNAME = '" +value+"'";
+              break;
             case "Category":  
-               tableName = "CATEWGORY";
+               tableName = "CATEGORY";
                 sql = "DELETE FROM "+ tableName+" WHERE CATEGORY = '" +value+"'";
             default:
                 break;

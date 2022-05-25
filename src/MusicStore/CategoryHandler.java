@@ -30,9 +30,12 @@ public class CategoryHandler {
     public ArrayList<MusicCategory> getCategories() {
         return categories;
     }
-     public void verfiyCategory(MusicalItem item){
+     public boolean verfiyCategory(MusicalItem item){
         MusicCategory tempCategory = item.getCategory();
       if(!categories.contains(tempCategory)){
                item.setCategory(defaultCategory);
-            }}
+               return false;
+            }
+      return true;
+     }
 }

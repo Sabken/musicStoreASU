@@ -42,7 +42,9 @@ public class MusicFXMLController implements Initializable {
     @FXML
     private ComboBox<String> editValue;
 
-    
+     @FXML
+    private ComboBox<String> catDrop;
+
   
 
     @FXML
@@ -67,10 +69,21 @@ public class MusicFXMLController implements Initializable {
     private TableView<MusicalItem> table;
 
     @FXML
-    void onAddNew(ActionEvent event) {
-
+    void onAddNew(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Admin/AddNewFXML.fxml"));
+        GUIMain.instance.LoadPage(root);
     }
-
+    @FXML
+    void onChangeDrop(ActionEvent event) throws IOException {
+      if(editValue.getSelectionModel().getSelectedIndex()+1 ==2){
+          catDrop.setVisible(true);
+          ecitValue.setVisible(false);
+      }
+      else{
+          catDrop.setVisible(false);
+          ecitValue.setVisible(true);
+      }
+    }
     @FXML
     void onBack(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Admin/AdminMainFXML.fxml"));
@@ -81,7 +94,13 @@ public class MusicFXMLController implements Initializable {
     void onEdit(ActionEvent event) throws SQLException {
           int i = Integer.parseInt(indexEdit.getText());
           int edi = editValue.getSelectionModel().getSelectedIndex()+1;
-          shop.editMusicItem(i, edi, ecitValue.getText());
+          if(edi ==2){
+               shop.editMusicItem(i, edi, String.valueOf(catDrop.getSelectionModel().getSelectedIndex()+1));
+          }
+          else{
+               shop.editMusicItem(i, edi, ecitValue.getText());
+          }
+         
           show();
           
     }
@@ -89,7 +108,7 @@ public class MusicFXMLController implements Initializable {
     @FXML
     void onRemove(ActionEvent event) throws SQLException {
         int i = Integer.parseInt(removeIndex.getText());
-        shop.removeItem(i-1);
+        shop.removeItem(i);
          show();
     }
 
@@ -100,6 +119,7 @@ public class MusicFXMLController implements Initializable {
             list.add((MusicalItem) shop.getSearchResult()[i]);
         }
         table.setItems(list);
+        table.refresh();
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -109,12 +129,18 @@ public class MusicFXMLController implements Initializable {
          quantity.setCellValueFactory(new PropertyValueFactory<MusicalItem,Integer>("quantity"));
          index.setCellValueFactory(new PropertyValueFactory<MusicalItem,Integer>("tempId"));
          description.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("description"));
-         releaseDate.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("artist"));
+         releaseDate.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("releaseDate"));
          duration.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("duration"));
          category.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("category"));
          artist.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("artist"));
-          ObservableList<String> list = FXCollections.observableArrayList("musicName" , "category" ,"duration" , "description","releaseDate", "quantity" ,"artist","price");
+        ObservableList<String> list = FXCollections.observableArrayList("musicName" , "category" ,"duration" , "description","releaseDate", "quantity" ,"artist","price");
           editValue.setItems(list);
+           ObservableList<String> listCat = FXCollections.observableArrayList();
+        for (int i = 0; i <shop.getCategoryHandler().getCategories().size(); i++) {
+            listCat.add(shop.getCategoryHandler().getCategories().get(i).toString());
+        }
+            catDrop.setItems(listCat);
+          catDrop.setVisible(false);
          show();
     }
 
