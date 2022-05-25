@@ -1,7 +1,7 @@
 package MusicStore;
 import java.util.*;
 
-public class MusicalItem {
+public class MusicalItem implements DataBaseHandler{
    String musicName;
    MusicCategory category;
    String duration;
@@ -10,7 +10,20 @@ public class MusicalItem {
    int  quantity;
    String artist;
    double price;
+   int tempId;
 
+    public int getTempId() {
+        return tempId;
+    }
+
+    public void setTempId(int tempId) {
+        this.tempId = tempId;
+    }
+    public MusicalItem() {
+    }
+
+   
+   
     public MusicalItem(String musicName, String duration, String description, String releaseDate, int quantity, String artist, double price, MusicCategory category) {
         this.musicName = musicName;
         this.duration = duration;
@@ -120,6 +133,33 @@ public class MusicalItem {
     public String toString(int index) {
         return index + "\t " + musicName + "\t " + category + "\t " + duration + "\t " + description + "\t " + releaseDate + "\t " + quantity + "\t " + artist + "\t " + price 
                 +"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
+    }
+
+    @Override
+    public Object[] getDBInfo() {
+        Object[] data = new Object[8];
+        data[0] = this.musicName;
+        data[1] = this.category.toString();
+        data[2] = this.duration; 
+        data[3] = this.description; 
+        data[4] = this.releaseDate; 
+        data[5] = this.quantity;
+        data[6] = this.artist; 
+        data[7] = this.price;
+        return data;
+    }
+
+    @Override
+    public void setDBInfo(Object[] data) {
+      this.musicName= ((String)data[0]);
+      this.category= new MusicCategory(((String)data[1]));
+      this.duration= ((String)data[2]);
+      this.description= ((String)data[3]);
+      this.releaseDate= ((String)data[4]);
+      this.quantity= ((int)data[5]);
+      this.artist= ((String)data[6]);
+      this.price= ((Double)data[7]);
+       
     }
    
    

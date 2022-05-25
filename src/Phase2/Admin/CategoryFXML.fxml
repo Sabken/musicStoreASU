@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="Phase2.Admin.CategoryFXMLController">
+   <children>
+      <Button layoutY="2.0" mnemonicParsing="false" onAction="#onBack" text="Back" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <TableView fx:id="table" layoutX="200.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="category" prefWidth="199.0" text="Category" />
+        </columns>
+      </TableView>
+      <TextField fx:id="catText" layoutX="200.0" layoutY="284.0" prefHeight="25.0" prefWidth="200.0" />
+      <Button layoutX="337.0" layoutY="325.0" mnemonicParsing="false" onAction="#onAdd" text="Add">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="200.0" layoutY="325.0" mnemonicParsing="false" onAction="#onRemove" text="Remove">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

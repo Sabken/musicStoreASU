@@ -58,17 +58,17 @@ public class AddNewFXMLController implements Initializable {
 
     @FXML
     void onBack(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Admin/MuiscFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Admin/MusicFXML.fxml"));
         GUIMain.instance.LoadPage(root);
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         shop = GUIMain.instance.getShop();
          ObservableList<String> list = FXCollections.observableArrayList();
-        for (int i = 0; i <shop.getCategoryHandler().getCategories().size(); i++) {
+         for (int i = 0; i < shop.getCategoryHandler().getCategories().size(); i++) {
             list.add(shop.getCategoryHandler().getCategories().get(i).toString());
         }
-        cat.setItems(list);
+         cat.setItems(list);
     }    
     
 }

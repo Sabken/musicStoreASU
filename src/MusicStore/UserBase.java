@@ -1,7 +1,7 @@
 
 package MusicStore;
 
-public abstract class UserBase {
+public abstract class UserBase implements DataBaseHandler{
     protected String firstName;    
     protected String lastName;
     protected String username;

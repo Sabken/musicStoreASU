@@ -70,20 +70,19 @@ public class BrowseMusicFXMLController implements Initializable {
         int indexCart = Integer.parseInt(musicIndex.getText());
         int amountT = Integer.parseInt(amount.getText());
         if(shop.addToCart(indexCart+1, amountT)){
-             Alert dg = new Alert(Alert.AlertType.INFORMATION);
-        dg.setTitle("Add To Cart");
-        dg.setContentText("Add to Cart");
-        dg.setHeaderText("Music Store");
-        dg.showAndWait();
+            Alert dg = new Alert(Alert.AlertType.CONFIRMATION);
+            dg.setTitle("Cart");
+            dg.setContentText("Add to cart");
+            dg.setHeaderText("Music Store");
+            dg.showAndWait();
         }
         else{
-             Alert dg = new Alert(Alert.AlertType.WARNING);
-        dg.setTitle("Add To Cart");
-        dg.setContentText("Try Again");
-        dg.setHeaderText("Music Store");
-        dg.showAndWait();
+              Alert dg = new Alert(Alert.AlertType.WARNING);
+            dg.setTitle("Cart");
+            dg.setContentText("Try Again");
+            dg.setHeaderText("Music Store");
+            dg.showAndWait();
         }
-        
     }
 
     @FXML

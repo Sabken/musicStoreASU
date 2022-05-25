@@ -4,6 +4,10 @@ package MusicStore;
 import java.util.ArrayList;
 public class CategoryHandler {
     private ArrayList<MusicCategory> categories;
+
+    public void setCategories(ArrayList<MusicCategory> categories) {
+        this.categories = categories;
+    }
     private MusicCategory defaultCategory;
     public CategoryHandler() {
         defaultCategory= new MusicCategory("unknown");

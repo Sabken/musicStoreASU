@@ -66,8 +66,8 @@ public class accessDB<E,T> {
           sql = "UPDATE MUSICITEM SET "+ValueName+" = "+((int)value)+" WHERE MUSICNAME = '"+idValue+"'";
        else
           sql = "UPDATE MUSICITEM SET "+ValueName+" = '"+((String)value)+"' WHERE MUSICNAME = '"+idValue+"'";
+       
        st.executeUpdate(sql);
-      // st.executeUpdate(sql);
        st.close(); 
        conn.close(); 
         

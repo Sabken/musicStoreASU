@@ -48,6 +48,7 @@ public class CartFXMLController implements Initializable {
     }
     void show(){
         shop.browseCart();
+                
         ArrayList<CartItemCol> l = new ArrayList();
         for (int i = 0; i < shop.getCartItems().size(); i++) {
             String[] ii = shop.getCartItems().get(i);
@@ -58,7 +59,6 @@ public class CartFXMLController implements Initializable {
         for (int i = 0; i < l.size(); i++) {
             list.add(l.get(i));
         }
-        
         table.setItems(list);
         table.refresh();
         String str= "Total Price: 0.0" ;
@@ -67,33 +67,31 @@ public class CartFXMLController implements Initializable {
             str = "Total Price: "+shop.getTotalOrderPrice();
         }
         price.setText(str);
-        //table.setItems(list);
     }
     @FXML
     void onPay(ActionEvent event) throws IOException, SQLException {
-        shop.PayOrder();
-        Alert dg = new Alert(Alert.AlertType.INFORMATION);
+        if(shop.isThereCart()){
+        Alert dg = new Alert(Alert.AlertType.CONFIRMATION);
         dg.setTitle("Thanks");
         dg.setContentText("Thank you for choosing our store :D");
         dg.setHeaderText("Music Store");
         dg.showAndWait();
         onBack(event);
+        shop.PayOrder();}
+        else{
+            Alert dg = new Alert(Alert.AlertType.ERROR);
+        dg.setTitle("Error");
+        dg.setContentText("Cart is Empty");
+        dg.setHeaderText("Music Store");
+        dg.showAndWait();
+        }
     }
 
     @FXML
     void onRemove(ActionEvent event) {
-        try{
         int i  = Integer.parseInt(itemIndex.getText());
         shop.removeFormCart(i-1);
         show();
-        }
-        catch (Exception ex){
-             Alert dg = new Alert(Alert.AlertType.ERROR);
-        dg.setTitle("Remove from cart");
-        dg.setContentText("index not found");
-        dg.setHeaderText("Music Store");
-        dg.showAndWait();
-        }
     }
 
     @Override

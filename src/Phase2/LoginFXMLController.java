@@ -38,12 +38,11 @@ public class LoginFXMLController implements Initializable {
         if(roleIndex == 0){
            UserAdmin f =   shop.adminLogin(usernameStr, passwordStr);
            if(f == null){
-                Alert dg = new Alert(Alert.AlertType.ERROR);
-        dg.setTitle("Error");
-        dg.setContentText("Wrong Username / Password For Admin");
-        dg.setHeaderText("Music Store");
-        dg.showAndWait();
-       
+                 Alert dg = new Alert(Alert.AlertType.ERROR);
+            dg.setTitle("Login");
+            dg.setContentText("Wrong Username or Password for Admin");
+            dg.setHeaderText("Music Store");
+            dg.showAndWait();
            }
            else{
                 Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Admin/AdminMainFXML.fxml"));
@@ -53,11 +52,11 @@ public class LoginFXMLController implements Initializable {
         else if(roleIndex == 1 ){
              UserCustomer f =   shop.customerLogin(usernameStr, passwordStr);
            if(f == null){
-                Alert dg = new Alert(Alert.AlertType.ERROR);
-        dg.setTitle("Error");
-        dg.setContentText("Wrong Username / Password For Customer");
-        dg.setHeaderText("Music Store");
-        dg.showAndWait();
+                 Alert dg = new Alert(Alert.AlertType.ERROR);
+            dg.setTitle("Login");
+            dg.setContentText("Wrong Username or Password for Customer");
+            dg.setHeaderText("Music Store");
+            dg.showAndWait();
            }
            else{
                 Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Customer/CustomerMainFXML.fxml"));

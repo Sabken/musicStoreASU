@@ -42,7 +42,9 @@ public class MusicFXMLController implements Initializable {
     @FXML
     private ComboBox<String> editValue;
 
-    
+     @FXML
+    private ComboBox<String> catDrop;
+
   
 
     @FXML
@@ -50,8 +52,7 @@ public class MusicFXMLController implements Initializable {
 
    @FXML
     private TableColumn<MusicalItem, String> name;
-     @FXML
-    private ComboBox<String> catDrop;
+
     @FXML
     private TableColumn<MusicalItem, Double> price;
 
@@ -67,24 +68,22 @@ public class MusicFXMLController implements Initializable {
     @FXML
     private TableView<MusicalItem> table;
 
-     @FXML
-    void onChangeDrop(ActionEvent event) {
-        if(editValue.getSelectionModel().getSelectedIndex()+1 == 2){
-            catDrop.setVisible(true);
-            ecitValue.setVisible(false);
-        }
-        
-        else{
-            catDrop.setVisible(false);
-            ecitValue.setVisible(true);
-        }
-    }
     @FXML
     void onAddNew(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Admin/AddNewFXML.fxml"));
         GUIMain.instance.LoadPage(root);
     }
-
+    @FXML
+    void onChangeDrop(ActionEvent event) throws IOException {
+      if(editValue.getSelectionModel().getSelectedIndex()+1 ==2){
+          catDrop.setVisible(true);
+          ecitValue.setVisible(false);
+      }
+      else{
+          catDrop.setVisible(false);
+          ecitValue.setVisible(true);
+      }
+    }
     @FXML
     void onBack(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Phase2/Admin/AdminMainFXML.fxml"));
@@ -95,16 +94,15 @@ public class MusicFXMLController implements Initializable {
     void onEdit(ActionEvent event) throws SQLException {
           int i = Integer.parseInt(indexEdit.getText());
           int edi = editValue.getSelectionModel().getSelectedIndex()+1;
-          if(edi == 2){
-                        shop.editMusicItem(i, edi,String.valueOf( catDrop.getSelectionModel().getSelectedIndex()));
-
+          if(edi ==2){
+               shop.editMusicItem(i, edi, String.valueOf(catDrop.getSelectionModel().getSelectedIndex()+1));
           }
           else{
-                        shop.editMusicItem(i, edi, ecitValue.getText());
-
+               shop.editMusicItem(i, edi, ecitValue.getText());
           }
+         
           show();
-          System.err.println("Done");
+          
     }
 
     @FXML
@@ -115,14 +113,11 @@ public class MusicFXMLController implements Initializable {
     }
 
      void show(){
-        shop.browse();
+         shop.browse();
         ObservableList<MusicalItem> list = FXCollections.observableArrayList();
-        table.setItems(list);
-
         for (int i = 0; i < shop.getSearchResult().length; i++) {
             list.add((MusicalItem) shop.getSearchResult()[i]);
         }
-        
         table.setItems(list);
         table.refresh();
     }
@@ -138,13 +133,13 @@ public class MusicFXMLController implements Initializable {
          duration.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("duration"));
          category.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("category"));
          artist.setCellValueFactory(new PropertyValueFactory<MusicalItem,String>("artist"));
-          ObservableList<String> list = FXCollections.observableArrayList("musicName" , "category" ,"duration" , "description","releaseDate", "quantity" ,"artist","price");
+        ObservableList<String> list = FXCollections.observableArrayList("musicName" , "category" ,"duration" , "description","releaseDate", "quantity" ,"artist","price");
           editValue.setItems(list);
-           ObservableList<String> catList = FXCollections.observableArrayList();
-           for (int i = 0; i < shop.getCategoryHandler().getCategories().size(); i++) {
-            catList.add(shop.getCategoryHandler().getCategories().get(i).toString());
+           ObservableList<String> listCat = FXCollections.observableArrayList();
+        for (int i = 0; i <shop.getCategoryHandler().getCategories().size(); i++) {
+            listCat.add(shop.getCategoryHandler().getCategories().get(i).toString());
         }
-           catDrop.setItems(catList);
+            catDrop.setItems(listCat);
           catDrop.setVisible(false);
          show();
     }
